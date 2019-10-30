@@ -4,7 +4,7 @@
 #   docker build --build-arg KERNELVER=$(uname -r  | cut -d '-' -f 1) -t alpine-kernel-modules .
 #   docker run -it --rm --privileged alpine-kernel-modules modprobe vhci-hcd
 
-FROM alpine:3.4
+FROM alpine:3.10
 MAINTAINER gw0 [http://gw.tnode.com/] <gw.2017@ena.one>
 
 # install alpine packages
