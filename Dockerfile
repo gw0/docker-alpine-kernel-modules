@@ -26,7 +26,7 @@ RUN apk add --no-cache --update \
     wget
 
 # download kernel sources
-ARG KERNELVER=4.9.4
+ARG KERNELVER=4.19.80
 RUN wget -nv -P /srv https://www.kernel.org/pub/linux/kernel/v4.x/linux-$KERNELVER.tar.gz \
  && tar -C /srv -zxf /srv/linux-$KERNELVER.tar.gz \
  && rm -f /srv/linux-$KERNELVER.tar.gz
