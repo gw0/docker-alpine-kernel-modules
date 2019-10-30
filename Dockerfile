@@ -15,6 +15,7 @@ RUN apk add --no-cache --update \
     bison \
     flex \
     binutils \
+    elfutils-dev \
     build-base \
     cmake \
     gcc \
@@ -46,6 +47,7 @@ RUN cd /srv/linux-$KERNELVER \
  && echo 'CONFIG_USBIP_VHCI_HC_PORTS=8' >> .config \
  && echo 'CONFIG_USBIP_VHCI_NR_HCS=1' >> .config \
  && echo 'CONFIG_USBIP_HOST=m' >> .config \
+ && echo 'CONFIG_RETPOLINE=n' >> .config \
  # patch modules
  && sed -i'.bak' '/hcd->amd_resume_bug/{s/^/\/\//;n;s/^/\/\//}' ./drivers/usb/core/hcd-pci.c \
  # build modules
