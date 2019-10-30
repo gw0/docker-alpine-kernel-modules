@@ -13,6 +13,7 @@ RUN apk add --no-cache --update \
     abuild \
     bc \
     bison \
+    flex \
     binutils \
     build-base \
     cmake \
