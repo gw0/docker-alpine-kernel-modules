@@ -12,6 +12,7 @@ RUN apk add --no-cache --update \
     # build essentials
     abuild \
     bc \
+    bison \
     binutils \
     build-base \
     cmake \
