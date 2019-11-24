@@ -4,7 +4,7 @@
 #   docker build --build-arg KERNELVER=$(uname -r  | cut -d '-' -f 1) -t alpine-kernel-modules .
 #   docker run -it --rm --privileged alpine-kernel-modules modprobe vhci-hcd
 
-FROM alpine:3.4
+FROM alpine:3.10
 MAINTAINER gw0 [http://gw.tnode.com/] <gw.2017@ena.one>
 
 # install alpine packages
@@ -12,7 +12,10 @@ RUN apk add --no-cache --update \
     # build essentials
     abuild \
     bc \
+    bison \
+    flex \
     binutils \
+    elfutils-dev \
     build-base \
     cmake \
     gcc \
@@ -23,7 +26,7 @@ RUN apk add --no-cache --update \
     wget
 
 # download kernel sources
-ARG KERNELVER=4.9.4
+ARG KERNELVER=4.19.80
 RUN wget -nv -P /srv https://www.kernel.org/pub/linux/kernel/v4.x/linux-$KERNELVER.tar.gz \
  && tar -C /srv -zxf /srv/linux-$KERNELVER.tar.gz \
  && rm -f /srv/linux-$KERNELVER.tar.gz
@@ -44,6 +47,7 @@ RUN cd /srv/linux-$KERNELVER \
  && echo 'CONFIG_USBIP_VHCI_HC_PORTS=8' >> .config \
  && echo 'CONFIG_USBIP_VHCI_NR_HCS=1' >> .config \
  && echo 'CONFIG_USBIP_HOST=m' >> .config \
+ && echo 'CONFIG_RETPOLINE=n' >> .config \
  # patch modules
  && sed -i'.bak' '/hcd->amd_resume_bug/{s/^/\/\//;n;s/^/\/\//}' ./drivers/usb/core/hcd-pci.c \
  # build modules
